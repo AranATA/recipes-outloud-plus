@@ -17,22 +17,23 @@ type User {
     recipeId: Int!
     image: String!
     title: String!
+    userNotes: [userNote]
 
+  }
+
+  type userNote {
+    _id: ID
+    userNoteText: String
+    userNoteAuthor: String
+    createdAt: String
   }
 
   input RecipeInput {
     recipeId: Int!
     image: String!
     title: String!
-
+    userNotes: [userNote]
   } 
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
-  }
 
   type Auth {
     token: ID!
@@ -43,16 +44,22 @@ type User {
     users: [User]
     user(username: String!): User
     me: User
+    savedRecipes(username: String!): [Recipe]
+    savedRecipe(savedRecipeId: ID!): Recipe
   }
 
   type Mutation {
-    signin(email: String!, password: String!): Auth
-    
     addUser(firstName: String!, lastName: String!, username: String!, email: String! password: String!): Auth
+
+    signin(email: String!, password: String!): Auth
 
     saveRecipe(input: RecipeInput): User
 
+    addUserNote(recipeId: Int!, userNoteText: String!): Recipe 
+
     removeRecipe(recipeId: Int!): User
+
+    removeUserNote(recipeId: Int!, userNoteId: ID!): Recipe
   }
   `;
   module.exports = typeDefs;
