@@ -13,8 +13,36 @@ export const QUERY_USER = gql`
         recipeId
         image
         title
-
       }
+    }
+  }
+`;
+
+export const QUERY_RECIPES = gql`
+  query getSavedRecipes {
+    savedRecipes {
+    _id
+    recipeId
+    image
+    title
+    userNotes
+    }
+  }
+  `;
+
+export const QUERY_SINGLE_RECIPE = gql`
+  query getSavedRecipe($savedRecipeId: ID!) {
+    savedRecipe(savedRecipeId: $savedRecipeId) {
+      _id
+      recipeId
+      image
+      title
+      userNotes {
+        _id
+        userNoteText
+        userNoteAuthor
+        createdAt
+      }  
     }
   }
 `;
@@ -32,7 +60,6 @@ export const GET_ME = gql`
         recipeId
         image
         title
-
       }
     }
   }
