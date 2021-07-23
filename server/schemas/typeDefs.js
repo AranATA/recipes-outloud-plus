@@ -18,7 +18,6 @@ type User {
     image: String!
     title: String!
     userNotes: [userNote]
-
   }
 
   type userNote {
@@ -51,7 +50,7 @@ type User {
   type Mutation {
     addUser(firstName: String!, lastName: String!, username: String!, email: String! password: String!): Auth
 
-    signin(email: String!, password: String!): Auth
+    signIn(email: String!, password: String!): Auth
 
     saveRecipe(input: RecipeInput): User
 

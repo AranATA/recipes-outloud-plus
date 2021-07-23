@@ -3,7 +3,7 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
-    
+
   Query: {
     // getSingleUser - By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, arg, context) => {
@@ -11,7 +11,24 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be signed in!');
+    },
+
+    users: async () => {
+      return User.find().populate('savedRecipes');
+    },
+
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate('savedRecipes');
+    },
+
+    savedRecipes: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Recipe.find(params).sort({ createdAt: -1 });
+    },
+
+    savedRecipe: async (parent, { savedRecipeId }) => {
+      return Recipe.findOne({ _id: savedRecipeId });
     },
   },
 
@@ -19,24 +36,22 @@ const resolvers = {
 
     addUser: async (parent, { firstName, lastName, username, email, password }, context) => {
       const user = await User.create({ firstName, lastName, username, email, password });
-      const token = signToken(user);    
+      const token = signToken(user);
       return { token, user };
     },
 
-    // login(email: String!, password: String!): Auth
-
-    signin: async(parent, { email, password }, context) => {
+    signIn: async (parent, { email, password }, context) => {
       const user = await User.findOne({ email });
-      
-      if(!user) {
+
+      if (!user) {
         throw new AuthenticationError('No user with this email found!');
       }
       const correctPw = await user.isCorrectPassword(password);
-      
+
       if (!correctPw) {
         throw new AuthenticationError('Incorrect Password!');
       }
-      
+
       const token = signToken(user);
       return { token, user };
     },
@@ -59,19 +74,58 @@ const resolvers = {
       throw new AuthenticationError('You need to be signed in!');
     },
 
+    addUserNote: async (parent, { recipeId, userNoteText }, context) => {
+      if (context.user) {
+        return Recipe.findOneAndUpdate(
+          { recipeId: recipeId },
+          {
+            $addToSet: {
+              userNotes: {
+                userNoteText,
+                userNoteAuthor: context.user.username
+              },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('Please sign in to add notes');
+    },
+
     removeRecipe: async (parent, { recipeId }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
-        { _id: context.user._id},
-        {
-          $pull: {
-            savedRecipes: { recipeId: recipeId }
-          }
-        },
-        { new: true }
+          { _id: context.user._id },
+          {
+            $pull: {
+              savedRecipes: { recipeId: recipeId }
+            }
+          },
+          { new: true }
         );
       }
-      throw new AuthenticationError('You need to be signed in!');
+      throw new AuthenticationError('Please sign in to remove recipes');
+    },
+
+    removeUserNote: async (parent, { recipeId, userNoteId }, context) => {
+      if (context.user) {
+        return Recipe.findOneAndUpdate(
+          { recipeId: recipeId },
+          {
+            $pull: {
+              userNotes: {
+                _id: userNoteId,
+                userNoteAuthor: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('Please sign in to remove notes');
     },
   },
 };
