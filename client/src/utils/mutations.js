@@ -44,6 +44,7 @@ export const SIGNIN_USER = gql`
           image
           title
           userNotes {
+            _id
             userNoteText
             userNoteAuthor
             createdAt
@@ -66,6 +67,7 @@ export const SAVE_RECIPE = gql`
         image
         title
         userNotes {
+          _id
           userNoteText
           userNoteAuthor
           createdAt
@@ -83,6 +85,7 @@ export const ADD_USER_NOTE = gql`
       image
       title
       userNotes {
+        _id
         userNoteText
         userNoteAuthor
         createdAt

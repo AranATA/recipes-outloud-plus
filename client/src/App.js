@@ -7,8 +7,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
-import { Redirect } from 'react-router';
-import Auth from '../src/utils/auth';
+
+// import Auth from '../src/utils/auth';
 import globalContext from './utils/globalContext'
 import globalState from './utils/globalState'
 
@@ -16,9 +16,8 @@ import HomeSignup from './pages/HomeSignup';
 import HomeSignin from './pages/HomeSignin';
 import SearchRecipes from './pages/SearchRecipes';
 import MyCollection from './pages/MyCollection';
-import Summary from './pages/Summary';
+// import Summary from './pages/Summary';
 import HomeFeatures from './pages/HomeFeatures';
-
 import Instructions from './pages/Instructions';
 
 const httpLink = createHttpLink({
@@ -58,17 +57,15 @@ function App() {
 
             <Route exact path='/me' component={MyCollection} />
 
-            {/* <Route exact path='/collections/:username' component={MyCollection} /> */}
+            <Route exact path='/collections/:username' component={MyCollection} />
 
             <Route exact path='/search-recipes' component={SearchRecipes} />
-{/* 
-            <Route exact path='/recipes/:id' component={TestSpeakPage} /> */}
 
             <Route exact path='/recipes/:id' component={Instructions} />
 
             <Route exact path='/features' component={HomeFeatures} />
 
-            {/* <Route render={() => <h1 className='display-2'>Wrong page!</h1>} /> */}
+            <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
 
           </Switch>
         </div>
