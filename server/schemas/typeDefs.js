@@ -31,7 +31,7 @@ type User {
     recipeId: Int!
     image: String!
     title: String!
-    userNotes: [userNote]
+    
   } 
 
   type Auth {

@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className='flex-wrap flex-row justify-center bg-darkBlue text-black font-mono w-full justify-center py-5 font-mono p-8'>
 
-      {window.location.pathname === "/me" ? <h2 className="text-center text-3xl p-7 font-landing text-red-300">Welcome To Your Profile Page!</h2> : ""} 
+      {window.location.pathname === "/me" ? <h2 className="text-center text-3xl p-7 font-landing text-red-300">Welcome To Your Collection Page!</h2> : ""} 
 
       <div className='flex justify-end items-center h-16 relative underline font-mono'> 
 
@@ -20,7 +20,7 @@ const Navbar = () => {
             <>
               <div className='p-8 inline-block'>
                 {window.location.pathname !== "/me" ? <Link to='/me' className='p-1.5 ml-16 mb-5 text-md font-mono text-white bg-blue-500 hover:bg-purple-700 rounded-lg'>
-                Profile </Link> : ""}
+                Collection </Link> : ""}
 
                 {window.location.pathname === "/" || window.location.pathname === "/search-recipes" || window.location.pathname === "/features" ? "" : 
                 <Link className="text-md p-2 ml-2 md:ml-20 p-2 ml-16 text-md ml-10 font-mono text-white bg-blue-400 hover:bg-purple-700 rounded-lg" to='/features'>

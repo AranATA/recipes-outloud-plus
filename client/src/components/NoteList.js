@@ -2,7 +2,7 @@ import React from 'react';
 
 const NoteList = ({ userNotes = [] }) => {
   if (!userNotes.length) {
-    return <h3>No Notes Yet</h3>;
+    return <h3>No notes to display yet</h3>;
   }
 
   return (
