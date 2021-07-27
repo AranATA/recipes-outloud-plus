@@ -10,9 +10,9 @@ import Auth from '../utils/auth';
 import HeaderHome from '../components/HeaderHome';
 import Navbar from '../components/Navbar';
 
-const Signin = (props) => {
+const HomeSignin = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const [signin, { error }] = useMutation(SIGNIN_USER);
+  const [signIn, { error }] = useMutation(SIGNIN_USER);
 
   // set state for alert - CSS NOTE: CREATE A MODAL FOR ALERT
   const [showAlert, setShowAlert] = useState(false);
@@ -29,14 +29,14 @@ const Signin = (props) => {
     event.preventDefault();
     console.log(formState);
     try {
-      const mutationResponse = await signin({
+      const mutationResponse = await signIn({
         variables: {
           email: formState.email,
           password: formState.password
         },
       });
 
-      const token = mutationResponse.data.signin.token;
+      const token = mutationResponse.data.signIn.token;
       Auth.login(token);
 
       console.log(token);
@@ -107,4 +107,4 @@ const Signin = (props) => {
   );
 }
 
-export default Signin;
+export default HomeSignin;

@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
-import NoteList from '../components/NoteList';
 import Navbar from '../components/Navbar';
+import NoteList from '../components/NoteList';
+import NoteForm from '../components/NoteForm';
+import { QUERY_SINGLE_RECIPE } from '../utils/queries';
+
 import SpeakButton from '../components/SpeakButton';
 import { recipeInformation } from '../utils/API';
 
 const Recipe = () => {
 
-  const { id: recipeId } = useParams();
-  console.log(recipeId)
   const [recipeData, setRecipeData] = useState({});
   console.log(recipeData)
-  const [isloading, setIsLoading] = useState(false)
 
+  const { id: recipeId } = useParams();
+  console.log(recipeId)
+
+  // URL to original recipe page
   const linkBody = recipeData.title?.replace(/\s+/g, '-').toLowerCase();
   console.log(linkBody);
   const recipeURL = `https://spoonacular.com/${linkBody}-${recipeId}`
+
+  const [isloading, setIsLoading] = useState(false)
 
   useEffect(() => {
 
@@ -42,7 +49,16 @@ const Recipe = () => {
       }
     }
     handleGetInstructions();
-  }, [recipeId])
+  }, [recipeId])  
+
+  const { loading, data } = useQuery(QUERY_SINGLE_RECIPE, {
+  // pass URL parameter
+  variables: { recipeId: recipeId },
+  })
+  const savedRecipe = data?.savedRecipe || {};
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
 
@@ -67,7 +83,7 @@ const Recipe = () => {
         }
       </div>
 
-      <NoteList />  
+      <NoteList userNotes={recipeData.userNotes} />  
 
     </div>
   );
