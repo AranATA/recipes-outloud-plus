@@ -55,7 +55,7 @@ const Recipe = () => {
   // pass URL parameter
   variables: { recipeId: recipeId },
   })
-  const savedRecipe = data?.savedRecipe || {};
+  const recipe = data?.recipe || {};
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -83,8 +83,13 @@ const Recipe = () => {
         }
       </div>
 
-      <NoteList userNotes={recipeData.userNotes} />  
+      <div>
+        <NoteList userNotes={recipe.userNotes} />  
+      </div>
 
+      <div>
+        <NoteForm recipeId={recipe._id} />
+      </div>
     </div>
   );
 }

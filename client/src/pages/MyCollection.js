@@ -1,7 +1,7 @@
 
 // NOTE TO TEAM: MYCOLLECTION.JS HAS REMOVE_RECIPE FUNCTIONALITY.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, GET_ME } from '../utils/queries';

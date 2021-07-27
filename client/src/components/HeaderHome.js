@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GiCookingPot } from 'react-icons/gi';
-import { IoMenuOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 import placeholder from '../images/placeholder.jpg';

@@ -2,7 +2,6 @@
 // NOTE TO TEAM: ADD_USER FUNCTION IS DEFINED IN HOMESIGNUP.JS
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -16,7 +15,7 @@ const Signup = (props) => {
   const [addUser] = useMutation(ADD_USER);
 
   // set state for alert - CSS NOTE: CREATE A MODAL FOR ALERT
-  const [showAlert, setShowAlert] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -46,7 +45,7 @@ const Signup = (props) => {
       Auth.login(token);
     } catch (e) {
       console.error(e);
-      setShowAlert(true);
+      // setShowAlert(true);
     }
     // clear form values
     setFormState({

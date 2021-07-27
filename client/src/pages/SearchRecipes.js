@@ -1,6 +1,5 @@
 // NOTE TO TEAM: SEARCH.JS HAS API SEARCH AND SAVE_RECIPE FUNCTIONALITY.
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SAVE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
